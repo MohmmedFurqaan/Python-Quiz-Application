@@ -1,0 +1,26 @@
+category,subcategory,question,op1,op2,op3,op4,answer
+Computer,Hardware,"Which of the following is an example of volatile memory?","Hard Disk Drive (HDD)","Solid-State Drive (SSD)","Random Access Memory (RAM)","Read-Only Memory (ROM)",3
+Computer,Hardware,"Which component is considered the 'brain' of the computer?","Hard Disk","RAM","Central Processing Unit (CPU)","Power Supply",3
+Computer,Hardware,"What does GPU stand for in computer hardware?","General Processing Unit","Graphics Processing Unit","Global Processing Unit","Graphical Power Unit",2
+Computer,Hardware,"Which of these is NOT a peripheral device?","Printer","Mouse","Keyboard","Motherboard",4
+Computer,Hardware,"What type of storage uses no moving parts and is faster than traditional HDDs?","Hard Disk Drive (HDD)","Solid-State Drive (SSD)","Optical Drive","Tape Drive",2
+Computer,Software,"What does the acronym OS stand for in computing?","Open Source","Operating System","Online Software","Object System",2
+Computer,Software,"Which software is used for creating text documents?","Spreadsheet Software","Database Software","Word Processor","Presentation Software",3
+Computer,Software,"What is the primary function of antivirus software?","Optimize system performance","Protect against malware","Manage user accounts","Compress files",2
+Computer,Software,"Which of the following is an open-source operating system?","Windows","macOS","Linux","iOS",3
+Computer,Software,"What does IDE stand for in software development?","Internet Development Engine","Integrated Development Environment","Intelligent Data Editor","Interactive Debugging Engine",2
+Science,Physics,"What is the unit of force in the SI system?","Joule","Pascal","Newton","Watt",3
+Science,Physics,"Which type of lens is used to correct short-sightedness?","Convex","Concave","Cylindrical","Plane",2
+Science,Physics,"What is the speed of light in a vacuum?","3 × 10^6 m/s","3 × 10^8 m/s","3 × 10^10 m/s","3 × 10^12 m/s",2
+Science,Physics,"What is the law of inertia also known as?","Newton's First Law","Newton's Second Law","Newton's Third Law","Law of Gravitation",1
+Science,Physics,"What does a voltmeter measure?","Current","Voltage","Resistance","Power",2
+Science,Chemistry,"What is the chemical formula for water?","H2O","CO2","NaCl","O2",1
+Science,Chemistry,"Which gas is known as the 'laughing gas'?","Nitrogen","Oxygen","Nitrous Oxide","Carbon Dioxide",3
+Science,Chemistry,"What is the pH of a neutral solution?","0","7","14","10",2
+Science,Chemistry,"Which element is most abundant in Earth's crust?","Iron","Aluminum","Oxygen","Silicon",3
+Science,Chemistry,"What is the process of converting a solid directly into a gas called?","Melting","Condensation","Sublimation","Evaporation",3
+Science,Biology,"What is the powerhouse of the cell?","Nucleus","Mitochondria","Ribosome","Chloroplast",2
+Science,Biology,"Which blood cells help in clotting of blood?","Red Blood Cells","White Blood Cells","Platelets","Plasma",3
+Science,Biology,"Which part of the plant is responsible for photosynthesis?","Root","Stem","Leaf","Flower",3
+Science,Biology,"What is the basic unit of life?","Atom","Molecule","Cell","Tissue",3
+Science,Biology,"Which vitamin is produced in the human body when exposed to sunlight?","Vitamin A","Vitamin C","Vitamin D","Vitamin B",3
