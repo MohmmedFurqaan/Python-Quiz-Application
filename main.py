@@ -1,5 +1,7 @@
 import csv
 import random
+import threading
+import time
 
 
 class Question:
@@ -16,7 +18,7 @@ class Question:
     def display_question(self, index):
         print(f"\nQuestion {index + 1}: {self.question}")
         for i, option in enumerate(self.options):
-            print(f"{i + 1}. {option}")
+            print(f"{chr(65 + i)}. {option}")  # A, B, C, D
 
 
 class QuizLoader:
@@ -56,8 +58,10 @@ class QuizLoader:
 class Quiz:
     """Manages the quiz flow, including filtering and conducting the quiz."""
 
-    def __init__(self, questions):
+    def __init__(self, questions, time_limit=10):
         self.questions = questions
+        self.time_limit = time_limit  # Time limit for each question
+        self.time_expired = False  # Flag to check if time has expired
 
     def filter_questions(self, category, subcategory):
         """Filters questions by category and subcategory."""
@@ -90,12 +94,26 @@ class Quiz:
             except ValueError:
                 print("Invalid input. Please enter a number.")
 
-    def ask_question(self, question, index):
-        """Displays a question and checks the user's answer."""
+    def ask_question_with_timer(self, question, index):
+        """Displays a question and checks the user's answer within a time limit."""
+        self.time_expired = False
+
+        def timer():
+            """Timer thread that sets the flag when time runs out."""
+            time.sleep(self.time_limit)
+            self.time_expired = True
+            print(f"\nTime's up! The correct answer was: {question.correct_answer}\n")
+
+        # Start the timer
+        threading.Thread(target=timer, daemon=True).start()
+
+        # Display the question and get the user's answer
         question.display_question(index)
-        while True:
+        while not self.time_expired:
             try:
-                answer = input("Your answer (A, B, C, or D): ").strip().upper()
+                answer = input(f"Your answer (A, B, C, or D) [Time limit: {self.time_limit}s]: ").strip().upper()
+                if self.time_expired:
+                    return False
                 if answer in ["A", "B", "C", "D"]:
                     if question.check_correct(answer):
                         print("Correct!\n")
@@ -107,6 +125,7 @@ class Quiz:
                     print("Please enter a valid option (A, B, C, or D).")
             except ValueError:
                 print("Invalid input. Please try again.")
+        return False
 
     def conduct(self):
         """Conducts the quiz based on user choices and displays the final score."""
@@ -137,7 +156,7 @@ class Quiz:
         print("\nStarting the quiz! Good luck!\n")
         score = 0
         for idx, question in enumerate(filtered_questions[:num_to_ask]):
-            if self.ask_question(question, idx):
+            if self.ask_question_with_timer(question, idx):
                 score += 1
 
         # Step 5: Display the final score
@@ -149,7 +168,7 @@ if __name__ == "__main__":
     FILE_PATH = "question.csv"
     questions = QuizLoader.load_questions(FILE_PATH)
     if questions:
-        quiz = Quiz(questions)
+        quiz = Quiz(questions, time_limit=15)  # Set a 15-second time limit per question
         quiz.conduct()
     else:
         print("No questions loaded. Exiting.")
