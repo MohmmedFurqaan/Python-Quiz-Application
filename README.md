@@ -7,7 +7,7 @@
   ✅ Loads questions from a CSV file
   ✅ Supports categories and subcategories
   ✅ Randomized questions for each session
-  ✅ Time-limited answering (configurable)
+  ✅ Time-limited answering (configurable) basic=30second
   ✅ Automatic scoring and feedback
 
 🚀 **How to Use**
