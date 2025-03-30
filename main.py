@@ -2,6 +2,7 @@ import csv
 import random
 import threading
 import time
+import sys
 
 
 class Question:
@@ -27,7 +28,7 @@ class QuizLoader:
         """Loads questions from a CSV file."""
         questions = []
         try:
-            with open(file_path, mode="r") as file:
+            with open(file_path, mode="r", encoding="utf-8") as file:
                 reader = csv.reader(file)
                 next(reader)  # Skip the header row
                 for row in reader:
@@ -35,7 +36,6 @@ class QuizLoader:
                         print(f"Skipping invalid row: {row}")
                         continue
                     try:
-                        # Create a Question object
                         question = Question(
                             category=row[0],
                             sub_category=row[1],
@@ -61,7 +61,7 @@ class Quiz:
     def __init__(self, questions, time_limit=10):
         self.questions = questions
         self.time_limit = time_limit  # Time limit for each question
-        self.time_expired = False  # Flag to check if time has expired
+        self.time_expired = threading.Event()  # Flag to check if time has expired
 
     def filter_questions(self, category, subcategory):
         """Filters questions by category and subcategory."""
@@ -96,12 +96,12 @@ class Quiz:
 
     def ask_question_with_timer(self, question, index):
         """Displays a question and checks the user's answer within a time limit."""
-        self.time_expired = False
+        self.time_expired.clear()  # Reset the flag
 
         def timer():
             """Timer thread that sets the flag when time runs out."""
             time.sleep(self.time_limit)
-            self.time_expired = True
+            self.time_expired.set()  # Indicate that time has expired
             print(f"\nTime's up! The correct answer was: {question.correct_answer}\n")
 
         # Start the timer
@@ -109,10 +109,10 @@ class Quiz:
 
         # Display the question and get the user's answer
         question.display_question(index)
-        while not self.time_expired:
+        while not self.time_expired.is_set():
             try:
                 answer = input(f"Your answer (A, B, C, or D) [Time limit: {self.time_limit}s]: ").strip().upper()
-                if self.time_expired:
+                if self.time_expired.is_set():  # If time expired while waiting for input
                     return False
                 if answer in ["A", "B", "C", "D"]:
                     if question.check_correct(answer):
@@ -125,7 +125,7 @@ class Quiz:
                     print("Please enter a valid option (A, B, C, or D).")
             except ValueError:
                 print("Invalid input. Please try again.")
-        return False
+        return False  # Return false if time expired before answering
 
     def conduct(self):
         """Conducts the quiz based on user choices and displays the final score."""
@@ -168,7 +168,7 @@ if __name__ == "__main__":
     FILE_PATH = "question.csv"
     questions = QuizLoader.load_questions(FILE_PATH)
     if questions:
-        quiz = Quiz(questions, time_limit=15)  # Set a 15-second time limit per question
+        quiz = Quiz(questions, time_limit=30)  # Set a 30-second time limit per question
         quiz.conduct()
     else:
         print("No questions loaded. Exiting.")
